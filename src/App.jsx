@@ -1,35 +1,92 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useSelector, useDispatch } from "react-redux";
 
+import {
+  increment,
+  decrement,
+  reset,
+  incrementByAmount,
+} from "./redux/counterReducer.js";
+const App = () => {
+  // const [counter, setCounter] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const val = useSelector((state) => state.counter);
+
+  // {
+
+  //   actions - method oo ay leedahay react-redux waxa ay kuu
+  //   suurtagelinayso waxaa waaye in actions-ka
+  //   aad soo sameysate inaad isticmaasho (dispatch UseDispatch)
+
+  //   state - useSelector waxaa iska react-redux waxeyna awood
+  //             kuu siinaysaa inaad xogta
+  //             state-ka ku jirto inaad soo hesho
+
+  // }
+
+  const [inp, setInp] = useState(0);
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <h1>Redux Counter App</h1>
+      <p style={{ paddingInline: "150px" }}>{val?.value}</p>
+      <input
+        value={inp}
+        onChange={(e) => setInp(e.target.value)}
+        type="number"
+      />
+      <br /> <br />
+      <button
+        onClick={() =>
+          // setCounter(counter + 1)
+          {
+            console.log("Increment");
+            dispatch(increment());
+          }
+        }
+      >
+        Increment
+      </button>
+      <button
+        onClick={() =>
+          // setCounter(counter - 1)
+          {
+            console.log("Decrement");
+            dispatch(decrement());
+          }
+        }
+      >
+        Decrement
+      </button>
+      <button
+        onClick={() =>
+          // setCounter(0)
+          {
+            console.log("Reset");
+            dispatch(reset());
+            setInp(0);
+          }
+        }
+      >
+        Reset
+      </button>
+      <button
+        onClick={() =>
+          // setCounter(counter + Number(value))
+          dispatch(incrementByAmount(inp))
+        }
+      >
+        Increment By Amount
+      </button>
+      {/*
+      <button onClick={() => setCounter(counter - Number(value))}>
+        Decrement By Amount
+      </button> 
+      */}
+    </div>
+  );
+};
 
-export default App
+export default App;
